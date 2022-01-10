@@ -1,0 +1,31 @@
+<ul>
+  <% @documents.each do |document| %>
+    <li>
+      <form class="inline" action="/<%= document %>/delete" method="post">
+        <a href="/<%= document %>"><%= document %></a>
+        <% unless [".png", ".jpg"].include?(File.extname(document)) %>
+          <a href="/<%= document %>/edit">Edit</a>
+        <% end %>
+        <button type="submit">Delete</button>
+      </form>
+      <form class="inline" action="/<%= document %>/duplicate" method="post">
+        <button type="submit">Duplicate</button>
+      </form>
+    </li>
+  <% end %>
+</ul>
+<p><a href="/new">New Document</a></p>
+
+<% if @user %>
+  <form class="inline" action="/signout" method="post">
+    <em><%= "Signed in as #{@user}." %></em>
+    <button type="submit">Sign Out</button>
+  </form>
+<% else %>
+  <form class="inline" action="/users/signin" method="get">
+    <button type="submit">Sign In</button>
+  </form>
+  <form class="inline" action="/users/register" method="get">
+    <button type="submit">Register</button>
+  </form>
+<% end %>
